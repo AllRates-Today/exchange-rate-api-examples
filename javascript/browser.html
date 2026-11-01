@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Currency converter (no API key)</title>
+</head>
+<body>
+  <!-- A complete currency converter in one file. Open it in a browser. -->
+  <input id="amount" type="number" value="100">
+  <select id="from"></select> to <select id="to"></select>
+  <p id="result">Loading…</p>
+
+  <!-- Required when the rates are shown on a public page: -->
+  <p><a href="https://allratestoday.com">Exchange rates by AllRatesToday</a></p>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    let rates = {};
+
+    async function load(base) {
+      const res = await fetch(`https://allratestoday.com/api/open/latest/${base}`);
+      const data = await res.json();
+      rates = data.rates;
+      return data;
+    }
+
+    function render() {
+      const r = rates[$('to').value];
+      $('result').textContent = `${$('amount').value} ${$('from').value} = ${(Number($('amount').value) * r).toFixed(2)} ${$('to').value}`;
+    }
+
+    (async () => {
+      await load('USD');
+      for (const code of Object.keys(rates).sort()) {
+        $('from').add(new Option(code, code, false, code === 'USD'));
+        $('to').add(new Option(code, code, false, code === 'EUR'));
+      }
+      render();
+      $('from').onchange = async () => { await load($('from').value); render(); };
+      $('to').onchange = render;
+      $('amount').oninput = render;
+    })();
+  </script>
+</body>
+</html>
