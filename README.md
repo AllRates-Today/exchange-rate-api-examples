@@ -378,6 +378,7 @@ with urllib.request.urlopen(req, timeout=30) as res:
 - Website: https://allratestoday.com
 - Open endpoint docs: https://allratestoday.com/open-api/
 - API documentation: https://allratestoday.com/developers/
+- [ChatGPT app](https://chatgpt.com/plugins/plugin_asdk_app_6ae1e76098f48191a285ac3f5ab7a83b) — ask ChatGPT for live and official central bank rates
 - All repositories: https://github.com/AllRates-Today
 
 Found a bug or want another language? [Open an issue](https://github.com/AllRates-Today/exchange-rate-api-examples/issues) or send a pull request.
